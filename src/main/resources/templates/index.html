@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/css/index.css}"/>
+        <link rel="stylesheet" th:href="@{/library/Bootstrap/CSS/bootstrap.min.css}"/>
+        <link rel="icon" type="image/png" href="/images/favicon.png" />
+        <title th:text="${title}">title</title>
+    </head>
+
+    <body>
+        <div th:insert="~{/header-footer/template.html::Header}">
+        </div>
+        <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://www.crisol.com.pe/media/wysiwyg/static/bnd_home_banner-principal_Top_02-09.jpg"
+                         class="d-block w-100" alt="Image_Error">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://www.crisol.com.pe/media/wysiwyg/static/bnd_banner-principal_infantil_03-09.jpg"
+                         class="d-block w-100" alt="Image_Error">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://www.crisol.com.pe/media/wysiwyg/static/bnd_home_banner-principal_mangas_03-09.jpg"
+                         class="d-block w-100" alt="Image_Error">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <!---->
+        <div class="container-fluid text-start p-3" style="background-color: rgb(195, 225, 255);">
+            <div class="row justify-content-center">
+                <div class="col-md-3 col-sm-8 d-flex align-items-center justify-content-center">
+                    <img src="/images/delivery.svg" alt="Image_Error" style="height: 50px;" class="me-3">
+                    <div>
+                        <p class="mb-0 fw-bold">Envíos a Todo el Perú</p>
+                        <p class="mb-0">Recibe tus Productos en la Puerta de tu Casa</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-8 d-flex align-items-center justify-content-center">
+                    <img src="/images/compras.svg" alt="Image_Error" style="height: 50px;" class="me-3">
+                    <div>
+                        <p class="mb-0 fw-bold">Compras Seguras</p>
+                        <p class="mb-0">Tus Compras son 100% Protegidas</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-8 d-flex align-items-center justify-content-center">
+                    <img src="/images/personal.svg" alt="Image_Error" style="height: 50px;" class="me-3">
+                    <div>
+                        <p class="mb-0 fw-bold">Equipo Especializado</p>
+                        <p class="mb-0">Te Ayudamos en lo que Necesites</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:insert="~{/header-footer/template.html::Footer}">
+        </div>
+        <script th:src="@{/library/JQuery/JQuery.js}"></script>
+        <script th:src="@{/library/Bootstrap/JS/bootstrap.bundle.min.js}"></script>
+        <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -1,0 +1,228 @@
+<div th:fragment="Header">
+    <!--Navigation-->
+    <nav class="Nav_Bar_01 navbar navbar-expand-lg">
+        <div class="container-fluid mx-4">
+            <a class="navbar-brand" th:href="@{/}"><img src="/images/logo.png" alt="Image_Error" style="width:50px; height: 50px;">&nbsp;The Readers</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                <form class="d-flex mx-auto w-50" role="search">
+                    <input class="form-control" type="search" placeholder="Búsqueda" aria-label="Search">
+                    <button class="btn" type="submit" style="background-color: rgb(80, 110, 125);">
+                        <i style="color: rgb(255, 255, 255);" class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Tiendas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Carrito</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/user/sign-up}">Regístrate</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav class="Nav_Bar_02 navbar d-lg-block justify-content-center">
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link text-reset" aria-current="page" href="#">No Ficción</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-reset" th:href="@{/library/libros-infantiles}">Libros Infantiles</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-reset" href="#">Libros Juveniles</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-reset" href="#">Mangas y Comics</a>
+            </li>
+        </ul>
+    </nav>
+    <!--Navigation-->
+</div>
+<div th:fragment="Footer">
+    <!--Footer-->
+    <footer class="footer">
+        <div class="container-fluid pt-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="accordion d-lg-flex justify-content-center gap-5" id="accordion">
+                            <div class="col-lg-2 col-md-12 d-flex flex-column align-items-center">
+                                <a class="navbar-brand" th:href="@{/}"><img src="/images/logo.png" alt="Image_Error" style="width:50px; height: 50px;">&nbsp;The Readers</a>
+                                <p class="text-body-secondary text-uppercase fw-bold text-center mb-0 mt-3"
+                                   style="font-size: small">
+                                    Visita Nuestras Redes Sociales
+                                </p>
+                                <nav class="navbar">
+                                    <div class="container align-items-center">
+                                        <a class="navbar-brand" href="https://www.facebook.com/?locale=es_LA">
+                                            <img src="/images/facebook-icon.svg" alt="Image_Error" style="width:20px; height: 20px;">
+                                        </a>
+                                        <a class="navbar-brand" href="https://www.instagram.com">
+                                            <img src="/images/instagram-icon.svg" alt="Image_Error" style="width:20px; height: 20px;">
+                                        </a>
+                                        <a class="navbar-brand" href="https://www.youtube.com/?app=desktop&hl=es">
+                                            <img src="/images/youtube-icon.svg" alt="Image_Error" style="width:20px; height: 20px;">
+                                        </a>
+                                        <a class="navbar-brand" href="https://x.com/?lang=es">
+                                            <img src="/images/twitter-icon.svg" alt="Image_Error" style="width:20px; height: 20px;">
+                                        </a>
+                                    </div>
+                                </nav>
+                            </div>
+                            <!---->
+                            <div class="col-lg-2 col-md-12">
+                                <h2 class="accordion-header">
+                                    <button
+                                        class="accordion-button text-body-secondary text-uppercase fw-bold d-lg-none d-xl-none"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#One"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                        Sobre Nosotros
+                                    </button>
+                                </h2>
+                                <div
+                                    class="mb-3 text-body-secondary text-uppercase fw-bold d-none d-lg-block d-xl-block">
+                                    Sobre Nosotros
+                                </div>
+                                <div class="collapse text-dark d-lg-flex" id="One" data-bs-parent="#accordion">
+                                    <nav class="nav flex-column p-3">
+                                        <p class="text-body-secondary">
+                                            <a class="text-reset text-decoration-none" th:href="@{/about}">Sobre Nosotros</a>
+                                        </p>
+                                        <p class="text-body-secondary">
+                                            <a class="text-reset text-decoration-none" href="#">Nuestras Tiendas</a>
+                                        </p>
+                                        <p class="text-body-secondary">
+                                            <a class="text-reset text-decoration-none" href="#">Contáctanos</a>
+                                        </p>
+                                        <p class="text-body-secondary">
+                                            <a class="text-reset text-decoration-none" href="#">Suscríbete</a>
+                                        </p>
+                                    </nav>
+                                </div>
+                            </div>
+                            <!---->
+                            <div class="col-lg-2 col-md-12">
+                                <h2 class="accordion-header">
+                                    <button
+                                        class="accordion-button text-body-secondary text-uppercase fw-bold d-lg-none d-xl-none"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#Two"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                        Mi Cuenta
+                                    </button>
+                                </h2>
+                                <div
+                                    class="mb-3 text-body-secondary text-uppercase fw-bold nav-link d-none d-lg-block d-xl-block">
+                                    Mi Cuenta
+                                </div>
+                                <div class="collapse text-dark d-lg-flex" id="Two" data-bs-parent="#accordion">
+                                    <nav class="nav flex-column p-3">
+                                        <p class="text-body-secondary">
+                                            <a href="#" class="text-reset text-decoration-none">Ingresar</a>
+                                        </p>
+                                        <p class="text-body-secondary">
+                                            <a href="#" class="text-reset text-decoration-none">Ver mis Pedidos</a>
+                                        </p>
+                                        <p class="text-body-secondary">
+                                            <a href="#" class="text-reset text-decoration-none">Crear una Cuenta</a>
+                                        </p>
+                                    </nav>
+                                </div>
+                            </div>
+                            <!---->
+                            <div class="col-lg-2 col-md-12">
+                                <h2 class="accordion-header">
+                                    <button
+                                        class="accordion-button text-body-secondary text-uppercase fw-bold d-lg-none d-xl-none"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#Three"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                        Atención al Cliente
+                                    </button>
+                                </h2>
+                                <div
+                                    class="mb-3 text-body-secondary text-uppercase fw-bold nav-link d-none d-lg-block d-xl-block">
+                                    Atención al Cliente
+                                </div>
+                                <div class="collapse text-dark d-lg-flex" id="Three" data-bs-parent="#accordion">
+                                    <nav class="nav flex-column p-3">
+                                        <p class="text-body-secondary">
+                                            <a href="#" class="text-reset text-decoration-none">Políticas de Envío</a>
+                                        </p>
+                                        <p class="text-body-secondary">
+                                            <a href="#" class="text-reset text-decoration-none">Políticas de
+                                                Privacidad</a>
+                                        </p>
+                                        <p class="text-body-secondary">
+                                            <a href="#" class="text-reset text-decoration-none">Políticas de
+                                                Devoluciones</a>
+                                        </p>
+                                        <p class="text-body-secondary">
+                                            <a href="#" class="text-reset text-decoration-none">Libro de
+                                                Reclamaciones</a>
+                                        </p>
+                                    </nav>
+                                </div>
+                            </div>
+                            <!---->
+                            <div class="col-lg-2 col-md-12">
+                                <h2 class="accordion-header">
+                                    <button
+                                        class="accordion-button text-body-secondary text-uppercase fw-bold d-lg-none d-xl-none"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#Four"
+                                        aria-expanded="true" aria-controls="collapseOne">
+                                        Suscríbete
+                                    </button>
+                                </h2>
+                                <div
+                                    class="mb-3 text-body-secondary text-uppercase fw-bold nav-link d-none d-lg-block d-xl-block">
+                                    Suscríbete
+                                </div>
+                                <div class="collapse text-dark d-lg-flex" id="Four" data-bs-parent="#accordion">
+                                    <nav class="nav flex-column p-3">
+                                        <p class="text-body-secondary">
+                                            Recibe Nuestras Últimas Ofertas y Tips Para un Buen
+                                            Descanso
+                                        </p>
+                                        <input type="email" class="form-control mb-3"
+                                               placeholder="email@gmail.com">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="flexCheckDefault">
+                                            <label class="form-check-label mb-3" for="flexCheckDefault">
+                                                <small class="text-body-secondary">Acepto los Términos y Condiciones y
+                                                    las Políticas de Privacidad</small>
+                                            </label>
+                                        </div>
+                                        <button class="btn btn-outline-primary w-100" type="submit"
+                                                style="background-color: rgb(195, 225, 255);">
+                                            Suscribirse
+                                        </button>
+                                    </nav>
+                                </div>
+                            </div>
+                            <!---->
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <small class="text-body-secondary">&#169; 2024 The Readers - Todos los Derechos
+                                Reservados</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--Footer-->
+</div>

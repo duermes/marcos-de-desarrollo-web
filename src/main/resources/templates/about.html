@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/css/index.css}"/>
+        <link rel="stylesheet" th:href="@{/library/Bootstrap/CSS/bootstrap.min.css}"/>
+        <link rel="icon" type="image/png" href="/images/favicon.png" />
+        <title>The Readers</title>
+    </head>
+
+    <body>
+        <div th:insert="~{/header-footer/template.html::Header}">
+        </div>
+        <!---->
+        <p class="fw-bold text-center my-4 lead">Historia sobre The Readers</p>
+        <div class="container">
+            <p class="fw-bold">Misión</p>
+            <p>
+                La librería "The Readers" esta dedicada a satisfacer las necesidades de
+                abastecimiento de libros de muy diversas ramas, brindando una atención a
+                nuestros clientes de la manera más amable y ágil y siempre satisfaciendo
+                sus necesidades cumpliendo con sus expectativas de servicio.
+            </p>
+
+            <p class="fw-bold">Visión</p>
+            <p>
+                "The Readers", aspira ser reconocida como empresa líder con la finalidad
+                de desarrollarse como una de las mejores librerías a nivel nacional,
+                distinguiéndose ante el mercado como una de las más grandes en el ramo
+                de la venta de libros, buscando siempre la excelencia y la innovación.
+            </p>
+
+            <p class="fw-bold">Beneficios de la lectura</p>
+            <p>
+                A través de los libros conocemos a personajes de personalidades muy
+                distintas. Algunos pueden ser más parecidos a nosotros; otros, menos.
+                Pero leyendo los hechos desde su punto de vista aprendemos a ponernos en
+                su piel, a ver las cosas con otros ojos, y esto aumenta nuestra empatía
+                y nuestra inteligencia emocional. Esta mayor capacidad para ver las
+                cosas desde una perspectiva distinta, claro, no la aplicamos sólo cuando
+                leemos sino que se acaba extrapolando a nuestra vida diaria.
+            </p>
+            <p>
+                Seguro que te ha pasado. Dar con una palabra que necesitas buscar con el
+                móvil mientras lees porque, en efecto, no te suena para nada. Puede ser
+                que no siempre nos detengamos a buscar cada palabra con la que nos
+                topamos pero las vamos acumulando y deduciendo su signficado por
+                contexto. Y a la siguiente vez que nos sale al paso, ya no nos resulta
+                tan extraña. Lo mismo pasa con expresiones propias de un gremio (al que
+                pertenece la protagonista del libro, por ejemplo, si es una costurera),
+                expresiones de otra época o incluso palabras que sabemos perfectamente
+                qué significan pero que sólo estamos acostumbrados a ver en el registro
+                escrito... no las usamos en nuestras charlas habituales. A base de leer
+                a diario todas estas expresiones acaban por formar parte de nuestro
+                vocabulario habitual y tenemos muchos más recursos para expresarnos.
+            </p>
+            <p>
+                Este es un efecto colateral maravilloso por ejemplo de las novelas
+                históricas. O de los biopics sobre estrellas o movimientos culturales.
+                Al abrir la cubierta del libro entramos a un universo que nos es del
+                todo desconocido. De la mano de la novela y de sus protagonistas
+                caminamos por ese paraje y, poco a poco, capítulo a capítulo, vamos
+                conociendo las singularidades que conforman ese lugar o esa etapa
+                histórica.
+            </p>
+        </div>
+        <div class="container text-center mb-3">
+            <img src="/images/bookstore.jpg" class="img-fluid text-center rounded" alt="Image_Error">
+        </div>
+        <!---->
+        <div class="container-fluid text-start p-3" style="background-color: rgb(195, 225, 255);">
+            <div class="row justify-content-center">
+                <div class="col-md-3 col-sm-8 d-flex align-items-center justify-content-center">
+                    <img src="/images/delivery.svg" alt="Image_Error" height="50px" class="me-3">
+                    <div>
+                        <p class="mb-0 fw-bold">Envíos a Todo el Perú</p>
+                        <p class="mb-0">Recibe tus Productos en la Puerta de tu Casa</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-8 d-flex align-items-center justify-content-center">
+                    <img src="/images/compras.svg" alt="Image_Error" height="50px" class="me-3">
+                    <div>
+                        <p class="mb-0 fw-bold">Compras Seguras</p>
+                        <p class="mb-0">Tus Compras son 100% Protegidas</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-8 d-flex align-items-center justify-content-center">
+                    <img src="/images/personal.svg" alt="Image_Error" height="50px" class="me-3">
+                    <div>
+                        <p class="mb-0 fw-bold">Equipo Especializado</p>
+                        <p class="mb-0">Te Ayudamos en lo que Necesites</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---->
+        <div th:insert="~{/header-footer/template.html::Footer}">
+        </div>
+        <!---->
+        <script th:src="@{/library/JQuery/JQuery.js}"></script>
+        <script th:src="@{/library/Bootstrap/JS/bootstrap.bundle.min.js}"></script>
+        <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
+    </body>
+</html>

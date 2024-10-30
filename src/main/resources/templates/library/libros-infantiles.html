@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/css/index.css}"/>
+        <link rel="stylesheet" th:href="@{/library/Bootstrap/CSS/bootstrap.min.css}"/>
+        <link rel="icon" type="image/png" href="/images/favicon.png" />
+        <title th:text="${title}">The Readers</title>
+    </head>
+
+    <style>
+        .custom-popover {
+            --bs-popover-max-width: 350px;
+            --bs-popover-border-color: var(--bs-red);
+            --bs-popover-header-bg: var(--bs-black);
+            --bs-popover-header-color: var(--bs-white);
+            --bs-popover-body-padding-x: 20px;
+            --bs-popover-body-padding-y: 20px;
+        }
+    </style>
+
+    <body>
+        <div th:insert="~{/header-footer/template.html::Header}">
+        </div>
+        <!---->
+        <div class="container">
+            <div class="row">
+                <!--Product-->
+                <div class="col-md-4 col-lg-3 col-sm-6 mt-3 mb-3" th:each="Variable:${books}">
+                    <div class="card">
+                        <img height="315px" th:src="${Variable.image}" th:title="${Variable.name}" class="card-img-top"
+                             alt="Image_Error" data-bs-toggle="popover" data-bs-custom-class="custom-popover"
+                             th:data-bs-content="${Variable.description}" data-bs-trigger="hover focus">
+                        <div class="card-body">
+                            <h4 class="text-body-secondary" th:text="${Variable.name}">Título del libro</h4>
+                            <h4 class="card-title text-primary">S/. <span th:text="${Variable.price}">precio</span></h4>
+                            <form method="POST" action="">
+                                <input type="hidden" name="ID_Producto" th:value="${Variable.id}">
+                                <input type="hidden" name="Nombre_Producto" th:value="${Variable.name}">
+                                <input type="hidden" name="Precio_Producto" th:value="${Variable.price}">
+                                <div data-mdb-input-init class="form-outline">
+                                    <label class="form-label">Unidades por Adquirir:</label>
+                                    <input type="number" name="Cantidad_Producto" id="Cantidad_Producto" min="1" value="1"
+                                           class="form-control">
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-success" name="Action_Button" value="Add">
+                                    Agregar al Carrito
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!---->
+        <div th:insert="~{/header-footer/template.html::Footer}">
+        </div>
+        <!---->
+        <script th:src="@{/library/JQuery/JQuery.js}"></script>
+        <script th:src="@{/library/Bootstrap/JS/bootstrap.bundle.min.js}"></script>
+        <script>
+            const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+            const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+        </script>
+        <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/css/index.css}"/>
+        <link rel="stylesheet" th:href="@{/library/Bootstrap/CSS/bootstrap.min.css}"/>
+        <link rel="icon" type="image/png" href="/images/favicon.png" />
+        <title th:text="${title}">The Readers</title>
+    </head>
+
+    <body>
+        <div th:insert="~{/header-footer/template.html::Header}">
+        </div>
+        <!---->
+        <section class="container-md text-black">
+            <form onsubmit="Get_Data(event)" method="POST" action=""
+                  class="row g-3 p-3 needs-validation w-50 justify-content-center mx-auto mt-3 mb-3 rounded"
+                  style="background-color: rgb(215, 215, 215);" novalidate>
+                <p class="fw-bold text-body-secondary text-uppercase text-center">
+                    Regístrate
+                </p>
+                <p class="m-0 text-center text-body-secondary">
+                    Ingresa tus Datos Para Crear una Cuenta
+                </p>
+                <div class="col-md-4">
+                    <label for="Name" class="form-label">Nombres:</label>
+                    <input type="text" class="form-control" id="Name" name="Name" placeholder="Nombres" required>
+                    <div class="invalid-feedback">Campo Obligatorio.</div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Lastname" class="form-label">Apellidos:</label>
+                    <input type="text" class="form-control" id="Lastname" name="Lastname" placeholder="Apellidos" required>
+                    <div class="invalid-feedback">Campo Obligatorio.</div>
+                </div>
+                <div class="col-md-4">
+                    <label for="Username" class="form-label">Usuario:</label>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                        <input type="text" class="form-control" id="Username" name="Username" placeholder="Usuario"
+                               aria-describedby="inputGroupPrepend" required>
+                        <div class="invalid-feedback">Campo Obligatorio.</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="E_Mail" class="form-label">Correo Electrónico:</label>
+                    <input type="email" class="form-control" id="E_Mail" name="E_Mail" placeholder="Correo Electrónico"
+                           required>
+                    <div class="invalid-feedback">Campo Obligatorio.</div>
+                </div>
+                <div class="col-md-6">
+                    <label for="Password" class="form-label">Contraseña:</label>
+                    <input type="password" class="form-control" id="Password" name="Password" placeholder="Contraseña"
+                           required>
+                    <div class="invalid-feedback">Campo Obligatorio.</div>
+                </div>
+                <div class="col-md-6">
+                    <label for="Phone" class="form-label">Teléfono:</label>
+                    <input type="number" class="form-control" id="Phone" name="Phone" placeholder="Teléfono" required>
+                    <div class="invalid-feedback">Campo Obligatorio.</div>
+                </div>
+                <div class="col-md-6">
+                    <label for="Gender" class="form-label">Género:</label>
+                    <select class="form-select" id="Gender" name="Gender" required>
+                        <option selected disabled value="">Género</option>
+                        <option>Masculino</option>
+                        <option>Femenino</option>
+                    </select>
+                    <div class="invalid-feedback">Campo Obligatorio.</div>
+                </div>
+                <div style="display: flex; justify-content: center" class="col-md-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="CheckBox" required>
+                        <label class="form-check-label" for="CheckBox">
+                            Acepto los Términos y Condiciones
+                        </label>
+                        <div class="invalid-feedback">Campo Obligatorio.</div>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center" class="col-md-12">
+                    <button type="submit" class="btn btn-primary" name="button" value="Register">
+                        Completar Registro
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Registro Exitoso</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">¡Tu Registro ha Sido Completado!</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="acceptButton">
+                            Aceptar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Campos Incompletos
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Por favor, Completa Todos los Campos Requeridos Antes de Enviar el
+                        Formulario.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="errorButton">
+                            Aceptar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---->
+        <div class="container-fluid text-start p-3" style="background-color: rgb(195, 225, 255);">
+            <div class="row justify-content-center">
+                <div class="col-md-3 col-sm-8 d-flex align-items-center justify-content-center">
+                    <img src="/images/delivery.svg" alt="Image_Error" height="50px" class="me-3">
+                    <div>
+                        <p class="mb-0 fw-bold">Envíos a Todo el Perú</p>
+                        <p class="mb-0">Recibe tus Productos en la Puerta de tu Casa</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-8 d-flex align-items-center justify-content-center">
+                    <img src="/images/compras.svg" alt="Image_Error" height="50px" class="me-3">
+                    <div>
+                        <p class="mb-0 fw-bold">Compras Seguras</p>
+                        <p class="mb-0">Tus Compras son 100% Protegidas</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-8 d-flex align-items-center justify-content-center">
+                    <img src="/images/personal.svg" alt="Image_Error" height="50px" class="me-3">
+                    <div>
+                        <p class="mb-0 fw-bold">Equipo Especializado</p>
+                        <p class="mb-0">Te Ayudamos en lo que Necesites</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---->
+        <div th:insert="~{/header-footer/template.html::Footer}">
+        </div>
+        <!---->
+        <script th:src="@{/library/JQuery/JQuery.js}"></script>
+        <script th:src="@{/library/Bootstrap/JS/bootstrap.bundle.min.js}"></script>
+        <script src="https://kit.fontawesome.com/81581fb069.js" crossorigin="anonymous"></script>
+    </body>
+</html>
