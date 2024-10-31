@@ -3,6 +3,7 @@ package com.mddw.readers.THE_READERS.controller;
 import com.mddw.readers.THE_READERS.dto.RegisterRequest;
 import com.mddw.readers.THE_READERS.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.boot.Banner;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestController
@@ -26,23 +28,25 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public String signUp(@Valid @ModelAttribute RegisterRequest request,
-                         BindingResult result,
-                         RedirectAttributes redirectAttributes) {
-        if (result.hasErrors()) {
-            System.out.println(result.getAllErrors());
-            return "user/sign-up";
+    public ModelAndView signUp(@Valid @ModelAttribute("registerRequest") RegisterRequest registerRequest,
+                               BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            ModelAndView mav = new ModelAndView("user/sign-up");
+            mav.addObject("title", "Registro");
+            return mav;
         }
 
         try {
-            userService.register(request);
+            userService.register(registerRequest);
             redirectAttributes.addFlashAttribute("success", "Registro exitoso");
-            return "";
+            return new ModelAndView("redirect:/user/log-in");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", e.getMessage());
-            System.out.println(e.getMessage());
-
-            return "redirect:/user/sign-up";
+            ModelAndView mav = new ModelAndView("user/sign-up");
+            mav.addObject("title", "Registro");
+            mav.addObject("error", e.getMessage());
+            return mav;
         }
     }
     @PostMapping("/log-in")
@@ -52,9 +56,11 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(email, password)
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            System.out.println("Inicio de sesión exitoso");
             return "redirect:/library/libros-infantiles";
         } catch (AuthenticationException e) {
             model.addAttribute("error", "Credenciales inválidas");
+            System.out.println(e.getMessage());
             return "";
         }
     }

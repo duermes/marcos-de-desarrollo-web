@@ -18,15 +18,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .csrf(csrf -> csrf.disable())
+                .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/home", "/index", "/api/auth/**", "/user/**",
-                                "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                                "/css/**", "/js/**", "/images/**", "/webjars/**",
+                                "/library/Bootstrap/**", "/library/JQuery/**", "/h2-console/**").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/user/log-in")
                         .loginProcessingUrl("/api/auth/log-in")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
                         .defaultSuccessUrl("/", true)
                         .failureUrl("/user/log-in?error=true")
                         .permitAll()
