@@ -3,7 +3,6 @@ package com.mddw.readers.THE_READERS.controller;
 import com.mddw.readers.THE_READERS.dto.RegisterRequest;
 import com.mddw.readers.THE_READERS.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.boot.Banner;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

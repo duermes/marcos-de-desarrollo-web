@@ -13,10 +13,15 @@
 <div class="container py-5">
     <h2 class="mb-4">Administración de Libros</h2>
 
+    <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
+
+    <!-- Botón para agregar nuevo libro -->
     <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#addBookModal">
         Agregar Nuevo Libro
     </button>
 
+    <!-- Tabla de libros -->
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -33,7 +38,7 @@
             <tr th:each="book : ${books}">
                 <td th:text="${book.id}"></td>
                 <td th:text="${book.name}"></td>
-                <td th:text="${book.description}"></td>
+                <td th:text="${#strings.abbreviate(book.description, 100)}"></td>
                 <td th:text="${'S/. ' + book.price}"></td>
                 <td>
                     <img th:src="${book.image}" alt="Portada del libro" style="height: 50px;">
@@ -45,18 +50,16 @@
                             data-bs-target="#editBookModal">
                         Editar
                     </button>
-                    <button class="btn btn-sm btn-danger"
-                            th:onclick="'deleteBook(' + ${book.id} + ')'"
-                            data-bs-toggle="modal"
-                            data-bs-target="#deleteBookModal">
-                        Eliminar
-                    </button>
+                    <form th:action="@{/admin/books/delete/{id}(id=${book.id})}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que quieres eliminar este libro?')">Eliminar</button>
+                    </form>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
 
+    <!-- Modal para Agregar Libro -->
     <div class="modal fade" id="addBookModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -64,7 +67,7 @@
                     <h5 class="modal-title">Agregar Nuevo Libro</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form th:action="@{/api/books}" method="POST">
+                <form th:action="@{/admin/books}" method="POST">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="name" class="form-label">Nombre</label>
@@ -92,6 +95,7 @@
         </div>
     </div>
 
+    <!-- Modal para Editar Libro -->
     <div class="modal fade" id="editBookModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -99,7 +103,7 @@
                     <h5 class="modal-title">Editar Libro</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form id="editBookForm" method="POST">
+                <form id="editBookForm" th:action="@{/admin/books/edit/{id}}" method="POST">
                     <div class="modal-body">
                         <input type="hidden" id="editBookId" name="id">
                         <div class="mb-3">
@@ -127,34 +131,14 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="deleteBookModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirmar Eliminación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar este libro?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" id="confirmDelete">Eliminar</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div th:insert="~{/header-footer/template.html::Footer}"></div>
 
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script>
-    let bookToDelete = null;
-
     function editBook(id) {
-        fetch(`/api/books/${id}`)
+        fetch(`/admin/books/${id}`)
             .then(response => response.json())
             .then(book => {
                 document.getElementById('editBookId').value = book.id;
@@ -162,39 +146,9 @@
                 document.getElementById('editDescription').value = book.description;
                 document.getElementById('editPrice').value = book.price;
                 document.getElementById('editImage').value = book.image;
+                document.getElementById('editBookForm').action = `/admin/books/edit/${book.id}`;
             });
     }
-
-    function deleteBook(id) {
-        bookToDelete = id;
-    }
-
-    document.getElementById('confirmDelete').addEventListener('click', function() {
-        if (bookToDelete) {
-            fetch(`/api/books/${bookToDelete}`, {
-                method: 'DELETE'
-            }).then(() => {
-                location.reload();
-            });
-        }
-    });
-
-    document.getElementById('editBookForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const id = document.getElementById('editBookId').value;
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData.entries());
-
-        fetch(`/api/books/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(() => {
-            location.reload();
-        });
-    });
 </script>
 </body>
 </html>
