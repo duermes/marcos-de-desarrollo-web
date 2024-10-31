@@ -4,11 +4,13 @@ package com.mddw.readers.THE_READERS.controller;
 import com.mddw.readers.THE_READERS.model.Book;
 import com.mddw.readers.THE_READERS.repository.BookRepository;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -55,5 +57,12 @@ public class AdminController {
         bookRepository.deleteById(id);
         redirectAttributes.addFlashAttribute("success", "Libro eliminado exitosamente.");
         return "redirect:/admin/books";
+    }
+
+    @GetMapping("/books/{id}")
+    @ResponseBody
+    public Book getBook(@PathVariable Integer id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Libro no encontrado"));
     }
 }

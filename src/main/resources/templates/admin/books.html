@@ -136,19 +136,33 @@
 <div th:insert="~{/header-footer/template.html::Footer}"></div>
 
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
-<script>
+<script th:inline="javascript">
     function editBook(id) {
         fetch(`/admin/books/${id}`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al obtener los datos del libro');
+                }
+                return response.json();
+            })
             .then(book => {
-                document.getElementById('editBookId').value = book.id;
-                document.getElementById('editName').value = book.name;
-                document.getElementById('editDescription').value = book.description;
-                document.getElementById('editPrice').value = book.price;
-                document.getElementById('editImage').value = book.image;
-                document.getElementById('editBookForm').action = `/admin/books/edit/${book.id}`;
+                if (book) {
+                    document.getElementById('editBookId').value = book.id;
+                    document.getElementById('editName').value = book.name;
+                    document.getElementById('editDescription').value = book.description;
+                    document.getElementById('editPrice').value = book.price;
+                    document.getElementById('editImage').value = book.image;
+                    document.getElementById('editBookForm').action = `/admin/books/edit/${book.id}`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al cargar los datos del libro');
             });
     }
+    document.getElementById('editBookModal').addEventListener('hidden.bs.modal', function () {
+        document.getElementById('editBookForm').reset();
+    });
 </script>
 </body>
 </html>
