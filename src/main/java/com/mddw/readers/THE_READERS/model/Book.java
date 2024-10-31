@@ -5,74 +5,69 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
+import lombok.Getter;
+import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 @Entity
 @Table(name = "books")
 public class Book {
+        @Setter
+        @Getter
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer id;
 
+        @Setter
+        @Getter
         @Column(nullable = false)
         private String name;
 
+        @Getter
         @Column(length = 1000)
         private String description;
 
+        @Setter
+        @Getter
         @Column(nullable = false)
         private String image;
 
+        @Getter
         private Integer price;
+
+        @Getter
+        @Setter
+        @ManyToOne
+        @JoinColumn(name = "category_id")
+        @JsonBackReference
+        private Category category;
+
+        @Getter
+        @Setter
+        @ManyToOne
+        @JoinColumn(name = "publisher_id")
+        @JsonBackReference
+        private Publisher publisher;
 
         public Book() {
         }
 
-        public Book(Integer id, String name, String description, String image, Integer price) {
+        public Book(Integer id, String name, String description, String image, Integer price, Category category, Publisher publisher) {
                 this.id = id;
                 this.name = name;
                 this.description = description;
                 this.image = image;
                 this.price = price;
-        }
-
-        public Integer getId() {
-                return id;
-        }
-
-        public void setId(Integer id) {
-                this.id = id;
-        }
-
-        public String getName() {
-                return name;
-        }
-
-        public void setName(String name) {
-                this.name = name;
-        }
-
-        public String getDescription() {
-                return description;
+                this.category = category;
+                this.publisher = publisher;
         }
 
         public void setDescription(String description) {
                 this.description = description;
         }
 
-        public String getImage() {
-                return image;
-        }
-
-        public void setImage(String image) {
-                this.image = image;
-        }
-
-        public Integer getPrice() {
-                return price;
-        }
-
-        public void setPrice(Integer price) {
+    public void setPrice(Integer price) {
                 this.price = price;
         }
 }

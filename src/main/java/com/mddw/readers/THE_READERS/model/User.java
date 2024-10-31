@@ -1,11 +1,11 @@
 package com.mddw.readers.THE_READERS.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Getter;
 
 @Entity
 @Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

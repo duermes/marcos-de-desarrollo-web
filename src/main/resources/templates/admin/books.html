@@ -30,6 +30,8 @@
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Precio</th>
+                <th>Categoría</th>
+                <th>Editorial</th>
                 <th>Imagen</th>
                 <th>Acciones</th>
             </tr>
@@ -40,6 +42,8 @@
                 <td th:text="${book.name}"></td>
                 <td th:text="${#strings.abbreviate(book.description, 100)}"></td>
                 <td th:text="${'S/. ' + book.price}"></td>
+                <td th:text="${book.category.name}"></td>
+                <td th:text="${book.publisher.name}"></td>
                 <td>
                     <img th:src="${book.image}" alt="Portada del libro" style="height: 50px;">
                 </td>
@@ -82,6 +86,26 @@
                             <input type="number" class="form-control" id="price" name="price" step="0.01" required>
                         </div>
                         <div class="mb-3">
+                            <label for="category" class="form-label">Categoría</label>
+                            <select class="form-select" id="category" name="category.id" required>
+                                <option value="">Seleccione una categoría</option>
+                                <option th:each="category : ${categories}"
+                                        th:value="${category.id}"
+                                        th:text="${category.name}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="publisher" class="form-label">Editorial</label>
+                            <select class="form-select" id="publisher" name="publisher.id" required>
+                                <option value="">Seleccione una editorial</option>
+                                <option th:each="publisher : ${publishers}"
+                                        th:value="${publisher.id}"
+                                        th:text="${publisher.name}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label for="image" class="form-label">URL de la Imagen</label>
                             <input type="url" class="form-control" id="image" name="image" required>
                         </div>
@@ -119,6 +143,26 @@
                             <input type="number" class="form-control" id="editPrice" name="price" step="0.01" required>
                         </div>
                         <div class="mb-3">
+                            <label for="editCategory" class="form-label">Categoría</label>
+                            <select class="form-select" id="editCategory" name="category.id" required>
+                                <option value="">Seleccione una categoría</option>
+                                <option th:each="category : ${categories}"
+                                        th:value="${category.id}"
+                                        th:text="${category.name}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPublisher" class="form-label">Editorial</label>
+                            <select class="form-select" id="editPublisher" name="publisher.id" required>
+                                <option value="">Seleccione una editorial</option>
+                                <option th:each="publisher : ${publishers}"
+                                        th:value="${publisher.id}"
+                                        th:text="${publisher.name}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label for="editImage" class="form-label">URL de la Imagen</label>
                             <input type="url" class="form-control" id="editImage" name="image" required>
                         </div>
@@ -138,28 +182,60 @@
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script th:inline="javascript">
     function editBook(id) {
+        console.log('Intentando editar libro con ID:', id);
+
         fetch(`/admin/books/${id}`)
             .then(response => {
+                console.log('Status:', response.status);
+                console.log('Headers:', response.headers);
+
                 if (!response.ok) {
-                    throw new Error('Error al obtener los datos del libro');
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
             })
             .then(book => {
-                if (book) {
-                    document.getElementById('editBookId').value = book.id;
-                    document.getElementById('editName').value = book.name;
-                    document.getElementById('editDescription').value = book.description;
-                    document.getElementById('editPrice').value = book.price;
-                    document.getElementById('editImage').value = book.image;
-                    document.getElementById('editBookForm').action = `/admin/books/edit/${book.id}`;
+                console.log('Respuesta completa del servidor:', book);
+
+                if (!book) {
+                    throw new Error('No se recibieron datos del libro');
+                }
+                console.log('ID:', book.id);
+                console.log('Nombre:', book.name);
+                console.log('Categoría:', book.category);
+                console.log('Editorial:', book.publisher);
+
+                document.getElementById('editBookId').value = book.id || '';
+                document.getElementById('editName').value = book.name || '';
+                document.getElementById('editDescription').value = book.description || '';
+                document.getElementById('editPrice').value = book.price || '';
+                document.getElementById('editImage').value = book.image || '';
+
+                const categorySelect = document.getElementById('editCategory');
+                const publisherSelect = document.getElementById('editPublisher');
+
+                if (categorySelect && book.category) {
+                    categorySelect.value = book.category.id;
+                    console.log('Categoría seleccionada:', categorySelect.value);
+                }
+
+                if (publisherSelect && book.publisher) {
+                    publisherSelect.value = book.publisher.id;
+                    console.log('Editorial seleccionada:', publisherSelect.value);
+                }
+
+                const form = document.getElementById('editBookForm');
+                if (form) {
+                    form.action = `/admin/books/edit/${book.id}`;
+                    console.log('Form action actualizada:', form.action);
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                alert('Error al cargar los datos del libro');
+                console.error('Error detallado:', error);
+                alert('Error al cargar los datos del libro. Por favor, intente nuevamente.');
             });
     }
+
     document.getElementById('editBookModal').addEventListener('hidden.bs.modal', function () {
         document.getElementById('editBookForm').reset();
     });
