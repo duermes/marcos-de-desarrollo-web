@@ -19,4 +19,10 @@ public class MainController {
         model.addAttribute("title", "Acerca de Nosotros");
         return "about";
     }
+
+    @GetMapping("/privacy")
+    public String privacy(Model model) {
+        model.addAttribute("title", "Política de Privacidad");
+        return "privacy";
+    }
 }

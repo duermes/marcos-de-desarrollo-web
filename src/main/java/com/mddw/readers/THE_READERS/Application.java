@@ -8,8 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication
 public class Application {
 
     public static void main(String[] args) {
@@ -19,7 +18,7 @@ public class Application {
     @Bean
     CommandLineRunner init() {
         return (args) -> {
-            System.out.println("Application started successfully, enter at http://localhost:8080");
+            System.out.println("Application started successfully, enter at http://localhost:8070");
         };
     }
 
