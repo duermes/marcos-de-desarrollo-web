@@ -25,11 +25,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Carrito</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
                         <a class="nav-link" th:href="@{/user/sign-up}">Regístrate</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
                         <a class="nav-link" th:href="@{/user/log-in}">Ingresar</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/api/auth/logout}" method="post" style="display: inline;">
+                            <button type="submit" class="nav-link btn btn-link">Cerrar Sesión</button>
+                        </form>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link" th:href="@{/admin/books}">Administrar Libros</a>
                     </li>
                 </ul>
             </div>

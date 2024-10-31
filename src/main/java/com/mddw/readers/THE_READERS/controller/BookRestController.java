@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/books")
@@ -26,20 +27,20 @@ public class BookRestController {
     }
 
     @GetMapping("/{id}")
-    public Book findById(@PathVariable Integer id) {
+    public Optional<Book> findById(@PathVariable Integer id) {
         return bookRepository.findById(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public void addBook(@Valid @RequestBody Book book){
-        bookRepository.addBook(book);
+        bookRepository.save(book);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable Integer id){
-        bookRepository.deleteBook(id);
+        bookRepository.deleteById(id);
     }
 
 }

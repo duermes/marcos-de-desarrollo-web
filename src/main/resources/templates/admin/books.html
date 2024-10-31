@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Libros</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/index.css}"/>
+</head>
+<body>
+<div th:insert="~{/header-footer/template.html::Header}"></div>
+
+<div class="container py-5">
+    <h2 class="mb-4">Administración de Libros</h2>
+
+    <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#addBookModal">
+        Agregar Nuevo Libro
+    </button>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Imagen</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.id}"></td>
+                <td th:text="${book.name}"></td>
+                <td th:text="${book.description}"></td>
+                <td th:text="${'S/. ' + book.price}"></td>
+                <td>
+                    <img th:src="${book.image}" alt="Portada del libro" style="height: 50px;">
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-warning"
+                            th:onclick="'editBook(' + ${book.id} + ')'"
+                            data-bs-toggle="modal"
+                            data-bs-target="#editBookModal">
+                        Editar
+                    </button>
+                    <button class="btn btn-sm btn-danger"
+                            th:onclick="'deleteBook(' + ${book.id} + ')'"
+                            data-bs-toggle="modal"
+                            data-bs-target="#deleteBookModal">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="addBookModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar Nuevo Libro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form th:action="@{/api/books}" method="POST">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="description" name="description" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">URL de la Imagen</label>
+                            <input type="url" class="form-control" id="image" name="image" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editBookModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Libro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form id="editBookForm" method="POST">
+                    <div class="modal-body">
+                        <input type="hidden" id="editBookId" name="id">
+                        <div class="mb-3">
+                            <label for="editName" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="editName" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDescription" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="editDescription" name="description" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPrice" class="form-label">Precio</label>
+                            <input type="number" class="form-control" id="editPrice" name="price" step="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editImage" class="form-label">URL de la Imagen</label>
+                            <input type="url" class="form-control" id="editImage" name="image" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteBookModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar Eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar este libro?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:insert="~{/header-footer/template.html::Footer}"></div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script>
+    let bookToDelete = null;
+
+    function editBook(id) {
+        fetch(`/api/books/${id}`)
+            .then(response => response.json())
+            .then(book => {
+                document.getElementById('editBookId').value = book.id;
+                document.getElementById('editName').value = book.name;
+                document.getElementById('editDescription').value = book.description;
+                document.getElementById('editPrice').value = book.price;
+                document.getElementById('editImage').value = book.image;
+            });
+    }
+
+    function deleteBook(id) {
+        bookToDelete = id;
+    }
+
+    document.getElementById('confirmDelete').addEventListener('click', function() {
+        if (bookToDelete) {
+            fetch(`/api/books/${bookToDelete}`, {
+                method: 'DELETE'
+            }).then(() => {
+                location.reload();
+            });
+        }
+    });
+
+    document.getElementById('editBookForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const id = document.getElementById('editBookId').value;
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        fetch(`/api/books/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(() => {
+            location.reload();
+        });
+    });
+</script>
+</body>
+</html>
